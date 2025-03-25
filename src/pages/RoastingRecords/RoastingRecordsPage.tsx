@@ -19,9 +19,23 @@ const dummyRecords: RoastingRecord[] = [
     id: 1,
     beanName: 'Ethiopian Yirgacheffe',
     roastLevel: 'Medium',
-    temperature: 200,
-    duration: 12,
-    date: new Date(),
+    firstCrackTime: 8,
+    firstCrackTemperature: 200,
+    secondCrackTime: 10,
+    secondCrackTemperature: 220,
+    greenCoffeeWeight: 500,
+    roastedCoffeeWeight: 450,
+    temperatures: [
+      { time: 0, temperature: 25 },
+      { time: 2, temperature: 100 },
+      { time: 4, temperature: 150 },
+      { time: 6, temperature: 180 },
+      { time: 8, temperature: 200 },
+      { time: 10, temperature: 220 },
+    ],
+    productionArea: 'Yirgacheffe',
+    processingMethod: 'Washed',
+    date: new Date(), 
     notes: 'Floral aroma with citrus notes',
   },
 ];
@@ -31,6 +45,7 @@ const RoastingRecordsPage: React.FC = () => {
   const [formOpen, setFormOpen] = useState<boolean>(false);
   const [editRecord, setEditRecord] = useState<RoastingRecord | undefined>(undefined);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [viewMode, setViewMode] = useState<boolean>(false);
 
   const handleAddRecord = (recordData: Omit<RoastingRecord, 'id' | 'date'>) => {
     const newRecord: RoastingRecord = {
@@ -105,7 +120,11 @@ const RoastingRecordsPage: React.FC = () => {
               }}
               onDelete={handleDeleteRecord}
               onShare={(record) => console.log('Share:', record)}
-              onView={(record) => console.log('View:', record)}
+              onView={(record) => {
+                setEditRecord(record);
+                setFormOpen(true);
+                setViewMode(true);
+              }}
             />
           </Grid>
         ))}
@@ -116,9 +135,11 @@ const RoastingRecordsPage: React.FC = () => {
         onClose={() => {
           setFormOpen(false);
           setEditRecord(undefined);
+          setViewMode(false);
         }}
         onSubmit={editRecord ? handleEditRecord : handleAddRecord}
         initialData={editRecord}
+        viewMode={viewMode}
       />
     </Container>
   );

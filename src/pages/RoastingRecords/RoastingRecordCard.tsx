@@ -39,12 +39,12 @@ const RoastingRecordCard: React.FC<RoastingRecordCardProps> = ({
         </Grid>
         <Box sx={{ mt: 2 }}>
           <Chip
-            label={`Temperature: ${record.temperature}°C`}
+            label={`First Crack Time: ${record.firstCrackTime}`}
             size="small"
             sx={{ mr: 1, mb: 1 }}
           />
           <Chip
-            label={`Duration: ${record.duration} min`}
+            label={`First Crack Temperature: ${record.firstCrackTime}°C`}
             size="small"
             sx={{ mr: 1, mb: 1 }}
           />
