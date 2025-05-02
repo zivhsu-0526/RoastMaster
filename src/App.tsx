@@ -5,6 +5,7 @@ import AppRoutes from "./routes/index";
 import { AuthProvider } from "./contexts/AuthContext";
 import "./App.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import './i18n'; // Import i18n configuration
 
 const theme = createTheme({
   palette: {

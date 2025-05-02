@@ -24,6 +24,7 @@ import {
   Scale as ScaleIcon,
   Timer as TimerIcon,
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 interface Settings {
   temperatureUnit: string;
@@ -37,11 +38,12 @@ interface Settings {
 }
 
 const RoastingSettingsPage: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const [settings, setSettings] = React.useState<Settings>({
     temperatureUnit: 'celsius',
     weightUnit: 'grams',
     timeFormat: '24h',
-    language: 'en',
+    language: i18n.language,
     notifications: true,
     defaultBatchSize: '250',
     targetTemperature: '200',
@@ -52,19 +54,20 @@ const RoastingSettingsPage: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>
   ) => {
     if ('checked' in event.target) {
-      // Handle checkbox change
       const { name, checked } = event.target;
       setSettings(prev => ({
         ...prev,
         [name]: checked,
       }));
     } else {
-      // Handle text input and select change
       const { name, value } = event.target;
       setSettings(prev => ({
         ...prev,
         [name]: value,
       }));
+      if (name === 'language') {
+        i18n.changeLanguage(value);
+      }
     }
   };
 
@@ -72,36 +75,34 @@ const RoastingSettingsPage: React.FC = () => {
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Paper elevation={3} sx={{ p: 3, borderRadius: 2 }}>
         <Typography variant="h4" gutterBottom>
-          Roasting Settings
+          {t('Settings')}
         </Typography>
         <Divider sx={{ mb: 4 }} />
 
         <Grid container spacing={4}>
-          {/* Units & Format Settings */}
           <Grid item xs={12} md={6}>
             <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
-              <ThermostatIcon sx={{ mr: 1 }} /> Measurement Units
+              <ThermostatIcon sx={{ mr: 1 }} /> {t('Measurement Units')}
             </Typography>
             <Box sx={{ mb: 3 }}>
               <FormControl fullWidth sx={{ mb: 2 }}>
-                <InputLabel>Temperature Unit</InputLabel>
+                <InputLabel>{t('Temperature Unit')}</InputLabel>
                 <Select
                   name="temperatureUnit"
                   value={settings.temperatureUnit}
-                  label="Temperature Unit"
+                  label={t('Temperature Unit')}
                   onChange={handleChange}
                 >
                   <MenuItem value="celsius">Celsius (°C)</MenuItem>
                   <MenuItem value="fahrenheit">Fahrenheit (°F)</MenuItem>
                 </Select>
               </FormControl>
-
               <FormControl fullWidth>
-                <InputLabel>Weight Unit</InputLabel>
+                <InputLabel>{t('Weight Unit')}</InputLabel>
                 <Select
                   name="weightUnit"
                   value={settings.weightUnit}
-                  label="Weight Unit"
+                  label={t('Weight Unit')}
                   onChange={handleChange}
                 >
                   <MenuItem value="grams">Grams (g)</MenuItem>
@@ -110,16 +111,15 @@ const RoastingSettingsPage: React.FC = () => {
                 </Select>
               </FormControl>
             </Box>
-
             <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', mt: 4 }}>
-              <TimerIcon sx={{ mr: 1 }} /> Time Format
+              <TimerIcon sx={{ mr: 1 }} /> {t('Time Format')}
             </Typography>
             <FormControl fullWidth>
-              <InputLabel>Time Format</InputLabel>
+              <InputLabel>{t('Time Format')}</InputLabel>
               <Select
                 name="timeFormat"
                 value={settings.timeFormat}
-                label="Time Format"
+                label={t('Time Format')}
                 onChange={handleChange}
               >
                 <MenuItem value="12h">12-hour</MenuItem>
@@ -127,16 +127,14 @@ const RoastingSettingsPage: React.FC = () => {
               </Select>
             </FormControl>
           </Grid>
-
-          {/* Default Values & Preferences */}
           <Grid item xs={12} md={6}>
             <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
-              <ScaleIcon sx={{ mr: 1 }} /> Default Values
+              <ScaleIcon sx={{ mr: 1 }} /> {t('Default Values')}
             </Typography>
             <Box sx={{ mb: 3 }}>
               <TextField
                 fullWidth
-                label="Default Batch Size"
+                label={t('Default Batch Size')}
                 name="defaultBatchSize"
                 value={settings.defaultBatchSize}
                 onChange={handleChange}
@@ -145,7 +143,7 @@ const RoastingSettingsPage: React.FC = () => {
               />
               <TextField
                 fullWidth
-                label="Target Temperature"
+                label={t('Target Temperature')}
                 name="targetTemperature"
                 value={settings.targetTemperature}
                 onChange={handleChange}
@@ -154,32 +152,29 @@ const RoastingSettingsPage: React.FC = () => {
               />
               <TextField
                 fullWidth
-                label="Default Roasting Duration (minutes)"
+                label={t('Default Roasting Duration (minutes)')}
                 name="roastingDuration"
                 value={settings.roastingDuration}
                 onChange={handleChange}
                 type="number"
               />
             </Box>
-
             <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', mt: 4 }}>
-              <LanguageIcon sx={{ mr: 1 }} /> Preferences
+              <LanguageIcon sx={{ mr: 1 }} /> {t('Preferences')}
             </Typography>
             <FormControl fullWidth sx={{ mb: 2 }}>
-              <InputLabel>Language</InputLabel>
+              <InputLabel>{t('Language')}</InputLabel>
               <Select
                 name="language"
                 value={settings.language}
-                label="Language"
+                label={t('Language')}
                 onChange={handleChange}
               >
                 <MenuItem value="en">English</MenuItem>
-                <MenuItem value="es">Español</MenuItem>
-                <MenuItem value="fr">Français</MenuItem>
-                <MenuItem value="de">Deutsch</MenuItem>
+                <MenuItem value="zh-TW">繁體中文</MenuItem>
+                <MenuItem value="ja">日本語</MenuItem>
               </Select>
             </FormControl>
-
             <FormControlLabel
               control={
                 <Switch
@@ -191,21 +186,15 @@ const RoastingSettingsPage: React.FC = () => {
               label={
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <NotificationsIcon sx={{ mr: 1 }} />
-                  Enable Notifications
+                  {t('Enable Notifications')}
                 </Box>
               }
             />
           </Grid>
         </Grid>
-
         <Box sx={{ mt: 4, textAlign: 'right' }}>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<SaveIcon />}
-            size="large"
-          >
-            Save Settings
+          <Button variant="contained" color="primary" startIcon={<SaveIcon />} size="large">
+            {t('Save Settings')}
           </Button>
         </Box>
       </Paper>

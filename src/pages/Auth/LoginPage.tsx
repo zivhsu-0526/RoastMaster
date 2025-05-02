@@ -3,23 +3,25 @@ import { Container, Box, Paper, Typography, Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { GoogleLogin } from "@react-oauth/google";
+import { useTranslation } from 'react-i18next';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { loginWithGoogle } = useAuth();
   const [error, setError] = React.useState("");
+  const { t } = useTranslation();
 
   const handleGoogleSuccess = async (credentialResponse: any) => {
     try {
       await loginWithGoogle(credentialResponse);
       navigate("/");
     } catch (err) {
-      setError("Failed to login with Google. Please try again.");
+      setError(t("Failed to login with Google. Please try again."));
     }
   };
 
   const handleGoogleError = () => {
-    setError("Google login failed. Please try again.");
+    setError(t("Google login failed. Please try again."));
   };
 
   return (
@@ -43,7 +45,7 @@ const LoginPage: React.FC = () => {
           }}
         >
           <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
-            Roast Master
+            {t('Roast Master')}
           </Typography>
           {error && (
             <Alert severity="error" sx={{ width: "100%", mb: 2 }}>

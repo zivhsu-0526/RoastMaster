@@ -12,6 +12,7 @@ import { Add, Search } from '@mui/icons-material';
 import RoastingRecordCard from './RoastingRecordCard';
 import RoastingRecordForm from './RoastingRecordForm';
 import { RoastingRecord } from '../../types';
+import { useTranslation } from 'react-i18next';
 
 // Dummy data for demonstration
 const dummyRecords: RoastingRecord[] = [
@@ -46,6 +47,7 @@ const RoastingRecordsPage: React.FC = () => {
   const [editRecord, setEditRecord] = useState<RoastingRecord | undefined>(undefined);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [viewMode, setViewMode] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const handleAddRecord = (recordData: Omit<RoastingRecord, 'id' | 'date'>) => {
     const newRecord: RoastingRecord = {
@@ -82,21 +84,21 @@ const RoastingRecordsPage: React.FC = () => {
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
         <Typography variant="h4" component="h1">
-          Roasting Records
+          {t('Roasting Records')}
         </Typography>
         <Button
           variant="contained"
           startIcon={<Add />}
           onClick={() => setFormOpen(true)}
         >
-          New Record
+          {t('New Record')}
         </Button>
       </Box>
 
       <TextField
         fullWidth
         variant="outlined"
-        placeholder="Search records..."
+        placeholder={t("Search records...")}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         sx={{ mb: 4 }}

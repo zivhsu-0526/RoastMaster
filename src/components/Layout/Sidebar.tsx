@@ -18,6 +18,7 @@ import {
   ContactSupport,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface SidebarProps {
   open: boolean;
@@ -40,6 +41,7 @@ const menuItems = [
 const Sidebar: React.FC<SidebarProps> = ({ open, variant, onClose }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -76,7 +78,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, variant, onClose }) => {
     >
       <List>
         {menuItems.map((item) => (
-          <ListItem key={item.text} disablePadding>
+          <ListItem key={t(item.text)} disablePadding>
             <ListItemButton
               onClick={() => handleNavigation(item.path)}
               selected={location.pathname === item.path}
@@ -96,7 +98,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, variant, onClose }) => {
               >
                 {item.icon}
               </ListItemIcon>
-              <ListItemText primary={item.text} />
+              <ListItemText primary={t(item.text)} />
             </ListItemButton>
           </ListItem>
         ))}

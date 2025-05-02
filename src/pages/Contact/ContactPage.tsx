@@ -20,6 +20,7 @@ import {
   Instagram as InstagramIcon,
   Send as SendIcon,
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = React.useState({
@@ -28,6 +29,7 @@ const ContactPage: React.FC = () => {
     subject: '',
     message: '',
   });
+  const { t } = useTranslation();
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -51,7 +53,7 @@ const ContactPage: React.FC = () => {
           <Card sx={{ height: '100%', borderRadius: 2 }}>
             <CardContent>
               <Typography variant="h5" gutterBottom>
-                Contact Information
+                {t('Contact Information')}
               </Typography>
               
               <Box sx={{ mt: 4 }}>
@@ -59,7 +61,7 @@ const ContactPage: React.FC = () => {
                   <EmailIcon color="primary" sx={{ mr: 2 }} />
                   <Box>
                     <Typography variant="subtitle2" color="textSecondary">
-                      Email
+                      {t('Email')}
                     </Typography>
                     <Typography>contact@roastmaster.com</Typography>
                   </Box>
@@ -69,7 +71,7 @@ const ContactPage: React.FC = () => {
                   <PhoneIcon color="primary" sx={{ mr: 2 }} />
                   <Box>
                     <Typography variant="subtitle2" color="textSecondary">
-                      Phone
+                      {t('Phone')}
                     </Typography>
                     <Typography>+1 (555) 123-4567</Typography>
                   </Box>
@@ -79,7 +81,7 @@ const ContactPage: React.FC = () => {
                   <LocationIcon color="primary" sx={{ mr: 2 }} />
                   <Box>
                     <Typography variant="subtitle2" color="textSecondary">
-                      Address
+                      {t('Address')}
                     </Typography>
                     <Typography>
                       123 Coffee Street
@@ -93,7 +95,7 @@ const ContactPage: React.FC = () => {
 
                 <Box sx={{ mt: 4 }}>
                   <Typography variant="subtitle2" color="textSecondary" gutterBottom>
-                    Follow Us
+                    {t('Follow Us')}
                   </Typography>
                   <Box sx={{ display: 'flex', gap: 1 }}>
                     <IconButton color="primary" aria-label="Facebook">
@@ -116,10 +118,10 @@ const ContactPage: React.FC = () => {
         <Grid item xs={12} md={8}>
           <Paper elevation={3} sx={{ p: 3, borderRadius: 2 }}>
             <Typography variant="h5" gutterBottom>
-              Send us a Message
+              {t('Send us a Message')}
             </Typography>
             <Typography variant="body2" color="textSecondary" paragraph>
-              Have questions about our services? Fill out the form below and we'll get back to you as soon as possible.
+              {t("Have questions about our services? Fill out the form below and we'll get back to you as soon as possible.")}
             </Typography>
 
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
@@ -127,7 +129,7 @@ const ContactPage: React.FC = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Your Name"
+                    label={t("Your Name")}
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
@@ -137,7 +139,7 @@ const ContactPage: React.FC = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Email Address"
+                    label={t("Email Address")}
                     name="email"
                     type="email"
                     value={formData.email}
@@ -148,7 +150,7 @@ const ContactPage: React.FC = () => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Subject"
+                    label={t("Subject")}
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
@@ -158,7 +160,7 @@ const ContactPage: React.FC = () => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Message"
+                    label={t("Message")}
                     name="message"
                     multiline
                     rows={4}
@@ -175,7 +177,7 @@ const ContactPage: React.FC = () => {
                     size="large"
                     endIcon={<SendIcon />}
                   >
-                    Send Message
+                    {t("Send Message")}
                   </Button>
                 </Grid>
               </Grid>

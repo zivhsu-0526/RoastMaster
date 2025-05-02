@@ -19,6 +19,7 @@ import {
   Business as BusinessIcon,
   Edit as EditIcon,
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 const ProfilePage: React.FC = () => {
   const profile = {
@@ -28,6 +29,7 @@ const ProfilePage: React.FC = () => {
     company: 'Coffee Roasters Inc.',
     avatar: '/path/to/avatar.jpg', // Replace with actual avatar path
   };
+  const { t } = useTranslation();
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -53,14 +55,14 @@ const ProfilePage: React.FC = () => {
               startIcon={<EditIcon />}
               sx={{ mt: 2 }}
             >
-              Edit Profile
+              {t('Edit Profile')}
             </Button>
           </Grid>
 
           {/* Profile Details */}
           <Grid item xs={12} md={8}>
             <Typography variant="h4" gutterBottom>
-              Profile Information
+              {t('Profile Information')}
             </Typography>
             <Divider sx={{ mb: 3 }} />
             <List>
@@ -69,7 +71,7 @@ const ProfilePage: React.FC = () => {
                   <PersonIcon color="primary" />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Name"
+                  primary={t("Name")}
                   secondary={profile.name}
                   primaryTypographyProps={{ color: 'textSecondary' }}
                   secondaryTypographyProps={{ variant: 'h6' }}
@@ -80,7 +82,7 @@ const ProfilePage: React.FC = () => {
                   <EmailIcon color="primary" />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Email"
+                  primary={t("Email")}
                   secondary={profile.email}
                   primaryTypographyProps={{ color: 'textSecondary' }}
                   secondaryTypographyProps={{ variant: 'h6' }}
@@ -91,7 +93,7 @@ const ProfilePage: React.FC = () => {
                   <PhoneIcon color="primary" />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Phone"
+                  primary={t("Phone")}
                   secondary={profile.phone}
                   primaryTypographyProps={{ color: 'textSecondary' }}
                   secondaryTypographyProps={{ variant: 'h6' }}
@@ -102,7 +104,7 @@ const ProfilePage: React.FC = () => {
                   <BusinessIcon color="primary" />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Company"
+                  primary={t("Company")}
                   secondary={profile.company}
                   primaryTypographyProps={{ color: 'textSecondary' }}
                   secondaryTypographyProps={{ variant: 'h6' }}

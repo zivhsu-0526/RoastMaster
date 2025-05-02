@@ -15,6 +15,7 @@ import {
   Coffee,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const features = [
   {
@@ -45,21 +46,22 @@ const features = [
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box sx={{ mb: 6, textAlign: 'center' }}>
         <Typography variant="h3" component="h1" gutterBottom>
-          Welcome to Roast Master
+          {t('Roast Master')}
         </Typography>
         <Typography variant="h6" color="text.secondary" paragraph>
-          Track, analyze, and share your coffee roasting journey
+          {t('Track, analyze, and share your coffee roasting journey')}
         </Typography>
       </Box>
 
       <Grid container spacing={4}>
         {features.map((feature) => (
-          <Grid item xs={12} sm={6} md={3} key={feature.title}>
+          <Grid item xs={12} sm={6} md={3} key={t(feature.title)}>
             <Card
               sx={{
                 height: '100%',
@@ -74,17 +76,17 @@ const HomePage: React.FC = () => {
               <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
                 <Box sx={{ mb: 2, color: 'primary.main' }}>{feature.icon}</Box>
                 <Typography gutterBottom variant="h5" component="h2">
-                  {feature.title}
+                  {t(feature.title)}
                 </Typography>
                 <Typography color="text.secondary" paragraph>
-                  {feature.description}
+                  {t(feature.description)}
                 </Typography>
                 <Button
                   variant="outlined"
                   color="primary"
                   onClick={() => navigate(feature.path)}
                 >
-                  Learn More
+                  {t('Learn More')}
                 </Button>
               </CardContent>
             </Card>
@@ -94,7 +96,7 @@ const HomePage: React.FC = () => {
 
       <Box sx={{ mt: 6, textAlign: 'center' }}>
         <Typography variant="h4" gutterBottom>
-          Start Your Roasting Journey
+          {t('Start Your Roasting Journey')}
         </Typography>
         <Button
           variant="contained"
@@ -102,7 +104,7 @@ const HomePage: React.FC = () => {
           onClick={() => navigate('/roasting-records')}
           sx={{ mt: 2 }}
         >
-          Create Your First Record
+          {t('Create Your First Record')}
         </Button>
       </Box>
     </Container>

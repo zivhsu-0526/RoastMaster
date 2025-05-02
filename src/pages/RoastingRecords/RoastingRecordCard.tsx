@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { Share, Visibility, Edit, Delete } from '@mui/icons-material';
 import { RoastingRecordCardProps } from '../../types';
+import { useTranslation } from 'react-i18next';
 
 const RoastingRecordCard: React.FC<RoastingRecordCardProps> = ({
   record,
@@ -19,6 +20,8 @@ const RoastingRecordCard: React.FC<RoastingRecordCardProps> = ({
   onShare,
   onView,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <CardContent sx={{ flexGrow: 1 }}>
@@ -28,12 +31,12 @@ const RoastingRecordCard: React.FC<RoastingRecordCardProps> = ({
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <Typography variant="body2" color="text.secondary">
-              Roast Level: {record.roastLevel}
+              {t('Roast Level')}: {record.roastLevel}
             </Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography variant="body2" color="text.secondary">
-              Date: {record.date.toLocaleDateString()}
+              {t('Date')}: {record.date.toLocaleDateString()}
             </Typography>
           </Grid>
         </Grid>
@@ -55,16 +58,16 @@ const RoastingRecordCard: React.FC<RoastingRecordCardProps> = ({
       </CardContent>
       <CardActions>
         <Button size="small" startIcon={<Share />} onClick={() => onShare(record)}>
-          Share
+          {t('Share')}
         </Button>
         <Button size="small" startIcon={<Visibility />} onClick={() => onView(record)}>
-          View
+          {t('View')}
         </Button>
         <Button size="small" startIcon={<Edit />} onClick={() => onEdit(record)}>
-          Edit
+          {t('Edit')}
         </Button>
         <Button size="small" startIcon={<Delete />} onClick={() => onDelete(record)}>
-          Delete
+          {t('Delete')}
         </Button>
       </CardActions>
     </Card>

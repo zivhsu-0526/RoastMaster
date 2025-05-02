@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Grid, Paper, Typography } from '@mui/material';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { useTranslation } from 'react-i18next';
 
 interface ChartOptions {
   title: {
@@ -27,7 +28,6 @@ interface ChartOptions {
   }>;
 }
 
-// Dummy data for demonstration
 const temperatureData: ChartOptions = {
   title: {
     text: 'Roasting Temperature Profile',
@@ -80,10 +80,13 @@ const beanOriginDistribution: ChartOptions = {
   },
   xAxis: {
     categories: ['Ethiopia', 'Colombia', 'Brazil', 'Guatemala', 'Kenya'],
+    title: {
+      text: 'Number of Roasts',
+    },
   },
   yAxis: {
     title: {
-      text: 'Number of Roasts',
+      text: 'Quantity',
     },
   },
   series: [
@@ -95,22 +98,24 @@ const beanOriginDistribution: ChartOptions = {
 };
 
 const DataVisualizationPage: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom>
-        Data Visualization
+        {t('Data Visualization')}
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper sx={{ p: 2 }}>
-            <HighchartsReact highcharts={Highcharts} options={temperatureData} />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 2 }}>
             <HighchartsReact
               highcharts={Highcharts}
-              options={roastLevelDistribution}
+              options={{
+                ...temperatureData,
+                title: { text: t('Roasting Temperature Profile') },
+                xAxis: { title: { text: t('Time (minutes)') } },
+                yAxis: { title: { text: t('Temperature (°C)') } },
+              }}
             />
           </Paper>
         </Grid>
@@ -118,7 +123,25 @@ const DataVisualizationPage: React.FC = () => {
           <Paper sx={{ p: 2 }}>
             <HighchartsReact
               highcharts={Highcharts}
-              options={beanOriginDistribution}
+              options={{
+                ...roastLevelDistribution,
+                title: { text: t('Roast Level Distribution') },
+              }}
+            />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Paper sx={{ p: 2 }}>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={{
+                ...beanOriginDistribution,
+                title: { text: t('Bean Origin Distribution') },
+                xAxis: {
+                  categories: beanOriginDistribution.xAxis?.categories,
+                  title: { text: t('Number of Roasts') },
+                },
+              }}
             />
           </Paper>
         </Grid>
