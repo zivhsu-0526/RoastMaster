@@ -14,18 +14,12 @@ import {
   TableCell,
   TableBody,
   IconButton,
+  Autocomplete,
 } from "@mui/material";
 import { RoastingRecordFormProps, RoastingRecord } from "../../types";
 import Highcharts from "highcharts";
 import { AddCircleOutline, ShowChart, Delete } from "@mui/icons-material";
-
-const roastLevels = [
-  "Light",
-  "Medium Light",
-  "Medium",
-  "Medium Dark",
-  "Dark",
-] as const;
+import { roastLevels, processingMethods, getAllAreas } from '../../constants';
 
 const RoastingRecordForm: React.FC<RoastingRecordFormProps> = ({
   open,
@@ -37,10 +31,10 @@ const RoastingRecordForm: React.FC<RoastingRecordFormProps> = ({
   const [formData, setFormData] = useState<RoastingRecord>({
     id: 0,
     beanName: "",
-    productionArea: "",
+    productionArea: "Other",
     greenCoffeeWeight: 0,
     roastedCoffeeWeight: 0,
-    processingMethod: "",
+    processingMethod: "Other",
     roastLevel: "Medium",
     temperatures: [],
     date: new Date(),
@@ -58,10 +52,10 @@ const RoastingRecordForm: React.FC<RoastingRecordFormProps> = ({
       setFormData({
         id: 0,
         beanName: "",
-        productionArea: "",
+        productionArea: "Other",
         greenCoffeeWeight: 0,
         roastedCoffeeWeight: 0,
-        processingMethod: "",
+        processingMethod: "Other",
         roastLevel: "Medium",
         temperatures: [],
         date: new Date(),
@@ -218,25 +212,56 @@ const RoastingRecordForm: React.FC<RoastingRecordFormProps> = ({
               />
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="Production Area"
-                name="productionArea"
-                value={formData.productionArea}
-                onChange={handleChange}
-                required
+              <Autocomplete
                 disabled={viewMode}
+                options={getAllAreas}
+                groupBy={(option) => option.region}
+                getOptionLabel={(option) => option.country}
+                value={getAllAreas.find(area => area.country === formData.productionArea) || null}
+                onChange={(_, newValue) => {
+                  handleChange({
+                    target: {
+                      name: 'productionArea',
+                      value: newValue?.country || 'Other'
+                    }
+                  } as React.ChangeEvent<HTMLInputElement>)
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Production Area"
+                    required
+                    name="productionArea"
+                  />
+                )}
+                renderOption={(props, option) => (
+                  <li {...props}>
+                    {option.country}
+                  </li>
+                )}
               />
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="Processing Method"
-                name="processingMethod"
-                value={formData.processingMethod}
-                onChange={handleChange}
-                required
+              <Autocomplete
                 disabled={viewMode}
+                options={processingMethods}
+                value={formData.processingMethod || null}
+                onChange={(_, newValue) => {
+                  handleChange({
+                    target: {
+                      name: 'processingMethod',
+                      value: newValue || 'Other'
+                    }
+                  } as React.ChangeEvent<HTMLInputElement>)
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Processing Method"
+                    required
+                    name="processingMethod"
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>

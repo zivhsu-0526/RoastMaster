@@ -1,3 +1,12 @@
+import { productionAreas, processingMethods, roastLevels } from '../constants';
+
+// Create union types from the constants
+type RoastLevel = typeof roastLevels[number];
+type ProcessingMethod = typeof processingMethods[number];
+
+// Create union type from all countries in productionAreas
+type ProductionArea = typeof productionAreas[keyof typeof productionAreas][number];
+
 export interface Temperatures {
   time: number; //時間
   temperature: number; //溫度
@@ -6,11 +15,11 @@ export interface Temperatures {
 export interface RoastingRecord {
   id: number;//編號
   beanName: string; //標題
-  productionArea: string; //產區
-  processingMethod: string; //處理方式
+  productionArea: ProductionArea; //產區
+  processingMethod: ProcessingMethod; //處理方式
   greenCoffeeWeight: number; //生豆重量
   roastedCoffeeWeight: number; //烘焙後重量
-  roastLevel: 'Light' | 'Medium Light' | 'Medium' | 'Medium Dark' | 'Dark'; //烘焙程度
+  roastLevel: RoastLevel; //烘焙程度
   firstCrackTime?: number; //第一次爆裂時間
   firstCrackTemperature?: number; //第一次爆裂溫度
   secondCrackTime?: number; //第二次爆裂時間

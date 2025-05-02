@@ -33,7 +33,7 @@ const dummyRecords: RoastingRecord[] = [
       { time: 8, temperature: 200 },
       { time: 10, temperature: 220 },
     ],
-    productionArea: 'Yirgacheffe',
+    productionArea: 'Ethiopia',
     processingMethod: 'Washed',
     date: new Date(), 
     notes: 'Floral aroma with citrus notes',
